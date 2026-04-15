@@ -1,0 +1,16 @@
+origin_station: "戸塚安行"
+destination_station: "鶴ヶ島"
+walking_minutes_to_campus: 15
+pre_class_buffer_minutes: 5
+
+scraper:
+  user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  request_delay_seconds: 2.0
+  cache_ttl_hours: 6
+  max_routes: 3
+
+email:
+  smtp_host: "smtp.gmail.com"
+  smtp_port: 587
+  from_address: ""   # Set GMAIL_USER in .env
+  to_address: ""     # Set GMAIL_TO in .env
