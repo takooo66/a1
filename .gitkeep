@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Pixel Cloud Animation</title>
+    <style>
+        :root {
+            --bg-color: #050010;
+            --cloud-white: #FFFFFF;
+            --cloud-gray: #A0A0A0;
+            --rain-color: #80A0B0;
+            --eye-color: #000000;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .canvas {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 雲の本体 (ドット絵の配置) */
+        .cloud {
+            position: relative;
+            width: 100px;
+            height: 60px;
+            background-color: var(--cloud-white);
+            /* 雲の形をbox-shadowの組み合わせで形成（ドット絵の手法） */
+            box-shadow: 
+                -10px 10px 0 0 var(--cloud-white), 10px 10px 0 0 var(--cloud-white),
+                -20px 20px 0 0 var(--cloud-white), 20px 20px 0 0 var(--cloud-white),
+                -20px 30px 0 0 var(--cloud-white), 20px 30px 0 0 var(--cloud-white),
+                0 40px 0 0 var(--cloud-white);
+            animation: cloud-mood 4s infinite step-end;
+        }
+
+        /* 顔のパーツ */
+        .face {
+            position: absolute;
+            top: 25px;
+            left: 20px;
+            width: 60px;
+            height: 10px;
+            animation: face-expression 4s infinite step-end;
+        }
+
+        /* 雨のアニメーション */
+        .rain-container {
+            margin-top: 50px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .drop {
+            width: 4px;
+            height: 12px;
+            background-color: var(--rain-color);
+            animation: fall 0.8s infinite linear;
+        }
+
+        .drop:nth-child(2) { animation-delay: 0.2s; }
+        .drop:nth-child(3) { animation-delay: 0.5s; }
+
+        /* アニメーション定義 */
+        @keyframes cloud-mood {
+            0%, 45%, 55%, 100% { background-color: var(--cloud-white); color: var(--cloud-white); }
+            50%, 60% { background-color: var(--cloud-gray); color: var(--cloud-gray); }
+            /* box-shadowも連動させる */
+            0%, 45%, 55%, 100% { 
+                box-shadow: -10px 10px 0 0 var(--cloud-white), 10px 10px 0 0 var(--cloud-white), -20px 20px 0 0 var(--cloud-white), 20px 20px 0 0 var(--cloud-white), -20px 30px 0 0 var(--cloud-white), 20px 30px 0 0 var(--cloud-white), 0 40px 0 0 var(--cloud-white);
+            }
+            50%, 60% { 
+                box-shadow: -10px 10px 0 0 var(--cloud-gray), 10px 10px 0 0 var(--cloud-gray), -20px 20px 0 0 var(--cloud-gray), 20px 20px 0 0 var(--cloud-gray), -20px 30px 0 0 var(--cloud-gray), 20px 30px 0 0 var(--cloud-gray), 0 40px 0 0 var(--cloud-gray);
+            }
+        }
+
+        @keyframes face-expression {
+            0%, 45%, 55%, 100% { /* 通常の顔 */
+                border-left: 6px solid var(--eye-color);
+                border-right: 6px solid var(--eye-color);
+                box-shadow: 0 10px 0 -2px var(--eye-color); /* 口 */
+            }
+            50% { border: none; box-shadow: none; } /* 無表情 */
+            60% { /* 怒り顔 */
+                border-left: 8px solid var(--eye-color);
+                border-right: 8px solid var(--eye-color);
+                transform: skewY(10deg);
+            }
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-20px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(100px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas">
+        <div class="cloud">
+            <div class="face"></div>
+        </div>
+        <div class="rain-container">
+            <div class="drop"></div>
+            <div class="drop"></div>
+            <div class="drop"></div>
+        </div>
+    </div>
+</body>
+</html>
